@@ -1,0 +1,14 @@
+# Ignore all files in this dir...
+*
+# ... except
+!.gitignore
+!scr
+!vids
+!stills
+!dataI
+!dataS
+!heat.gnu
+!outfiles
+!pngheatI
+!pngheatS
+!pngtot

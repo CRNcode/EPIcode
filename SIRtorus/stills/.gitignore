@@ -1,0 +1,8 @@
+# Ignore all files in this dir...
+*
+# ... except
+!.gitignore
+!sus_2.0_3.5_30_40_30_0.00_medium.png
+!sus_2.0_3.5_30_40_30_0.02_medium.png
+!sus_2.0_3.5_30_40_30_0.05_medium.png
+!sus_2.0_3.5_30_40_30_0.10_medium.png

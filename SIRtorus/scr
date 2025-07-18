@@ -1,0 +1,14 @@
+rm -fr heatI/* heatS/* pngheatI/* pngheatS/* pngtot/*
+./heat.gnu $(< gnuargs)
+rm -fr heatI.mp4
+cd pngheatI && ffmpeg -f image2 -r 24 -i '%04d.png' ../heatI.mp4 && cd ..
+rm -fr heatS.mp4
+cd pngheatS && ffmpeg -f image2 -r 24 -i '%04d.png' ../heatS.mp4 && cd ..
+rm -fr tot.mp4
+cd pngtot && ffmpeg -f image2 -r 24 -i '%04d.png' ../tot.mp4 && cd ..
+rm -fr heatboth.mp4
+ffmpeg -i heatI.mp4 -i heatS.mp4 -filter_complex hstack=inputs=2 -ac 2 heatboth.mp4
+rm -fr heatall.mp4
+ffmpeg -i heatboth.mp4 -i tot.mp4 -filter_complex vstack=inputs=2 -ac 2 heatall.mp4
+
+mplayer heatall.mp4

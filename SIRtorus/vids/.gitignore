@@ -1,0 +1,8 @@
+# Ignore all files in this dir...
+*
+# ... except
+!.gitignore
+!heatall_2.0_3.5_30_40_30_0.0_medium.mp4
+!heatall_2.0_3.5_30_40_30_0.02_medium.mp4
+!heatall_2.0_3.5_30_40_30_0.05_medium.mp4
+!heatall_2.0_3.5_30_40_30_0.10_medium.mp4
