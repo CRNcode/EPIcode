@@ -97,7 +97,7 @@ set key top left
 
 #./bin/SIRring 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
-set title "ring networks"
+set title "small-world rings"
 set xlabel "rewiring probability"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4.png'
@@ -106,7 +106,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4' using (100*($1)):($2) with circles lc
 
 #./bin/SIRring -c1 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
-set title "ring networks (constant infectivity)"
+set title "small-world rings (constant infectivity)"
 set xlabel "rewiring probability"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4_c1.png'
@@ -115,7 +115,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c1' using (100*($1)):($2) with circles
 
 #./bin/SIRring -c3 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
-set title "ring networks (constant susceptibility)"
+set title "small-world rings (constant susceptibility)"
 set xlabel "rewiring probability"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4_c3.png'
@@ -123,7 +123,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c3' using (100*($1)):($2) with circles
          'outfiles/sw_rewire_mean_2.0_4.0_50_100_4_c3' using (100*($1)):($2) w circles lc rgb "red" fs solid 1.0 border lt -1 t "mean of all",
 
 #./bin/SIRgrid 100 1000 2.0 3.5 30 19 13
-set title "grid networks"
+set title "small-world grids"
 #unset title
 #unset ylabel
 set output 'plots/grid_rewire_2.0_3.5_30_19_13.png'
@@ -132,7 +132,7 @@ plot 'outfiles/grid_rewire_2.0_3.5_30_19_13' using (100*($1)):($2) with circles 
 
 
 #./bin/SIRgrid -c1 100 1000 2.0 3.5 30 19 13
-set title "grid networks (constant infectivity)"
+set title "small-world grids (constant infectivity)"
 #unset title
 #unset ylabel
 set output 'plots/grid_rewire_2.0_3.5_30_19_13_c1.png'
@@ -140,7 +140,7 @@ plot 'outfiles/grid_rewire_2.0_3.5_30_19_13_c1' using (100*($1)):($2) with circl
          'outfiles/grid_rewire_mean_2.0_3.5_30_19_13_c1' using (100*($1)):($2) w circles lc rgb "red" fs solid 1.0 border lt -1 t "mean of all",
 
 #./bin/SIRgrid -c3 100 1000 2.0 3.5 30 19 13
-set title "grid networks (constant susceptibility)"
+set title "small-world grids (constant susceptibility)"
 #unset title
 #unset ylabel
 set output 'plots/grid_rewire_2.0_3.5_30_19_13_c3.png'

@@ -1,9 +1,34 @@
+
+/* Copyright (C) 2024-5, Murad Banaji
+ *
+ * This file is part of EPIcode, for compartmental models in epidemiology
+ *
+ * EPIcode is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 2, 
+ * or (at your option) any later version.
+ *
+ * EPIcode is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with EPIcode: see the file COPYING.  If not, write to 
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330, 
+ * Boston, MA 02111-1307, USA. 
+
+ */
+
 #include "Epi.h"
 
+// Ii+Sj->Ii+Ij (i,j=1,...,n) (infection, but no migration)
+// Ii-->Ri (death or recovery with immunity)
 
-//Ii+Si-->(ki)2Ii, infection process
-//Ii+Sj->Ii+Ij, cross infection (occurs in compartment j)
-//Ii-->(kr) Ri (death or recovery with immunity)
+// SIR epidemics on grids: specialised for generating videos
+// We can select an epidemic hitting roughly a given proportion of
+// compartments through "size_select"
+
 int main(int argc, char *argv[]){
 
   if(argc<8){
@@ -71,7 +96,7 @@ int main(int argc, char *argv[]){
   int constout=2;
   int size_select=2;//2:try to find a medium sized epi
   int epimin=0, epimax=Nx*Ny;
-  int found=0;
+  int found=0; // searching for an epi of roughly a given size?
 
   static std::mt19937 rng(std::random_device{}()); // Standard mersenne_twister_engine seeded with rd()
 
@@ -88,8 +113,17 @@ int main(int argc, char *argv[]){
   }
 
 
-  if(size_select==2){
+  if(size_select==1){
+    epimin=(int)(0.02*Nx*Ny);epimax=(int)(0.1*Nx*Ny);
+  }
+  else if(size_select==2){
     epimin=(int)(0.08*Nx*Ny);epimax=(int)(0.18*Nx*Ny);
+  }
+  else if(size_select==3){
+    epimin=(int)(0.18*Nx*Ny);epimax=(int)(0.38*Nx*Ny);
+  }
+  else if(size_select==4){
+    epimin=(int)(0.38*Nx*Ny);epimax=(int)(0.58*Nx*Ny);
   }
 
   S=imatrix(Nx, Ny);I=imatrix(Nx, Ny);R=imatrix(Nx, Ny);
@@ -140,7 +174,7 @@ int main(int argc, char *argv[]){
     //fprintf(stderr, "Epi size: %d\n", Episz[jrun]);
 
     Rtot=msum(R,Nx,Ny);
-    if(size_select==2 && Episz[jrun]>=epimin && Episz[jrun]<=epimax){
+    if(size_select && Episz[jrun]>=epimin && Episz[jrun]<=epimax){
       fprintf(stderr, "Epi size: %d\n", Episz[jrun]);
       found=1;
     }

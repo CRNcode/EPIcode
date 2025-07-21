@@ -1,19 +1,19 @@
-/* Copyright (C) 2024, Murad Banaji
+/* Copyright (C) 2024-5, Murad Banaji
  *
- * This file is part of EPIcomp, for compartmental models in epidemiology
+ * This file is part of EPIcode, for compartmental models in epidemiology
  *
- * EPIcomp is free software; you can redistribute it and/or 
+ * EPIcode is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2, 
  * or (at your option) any later version.
  *
- * EPIcomp is distributed in the hope that it will be useful, but
+ * EPIcode is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EPIcomp: see the file COPYING.  If not, write to 
+ * along with EPIcode: see the file COPYING.  If not, write to 
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330, 
  * Boston, MA 02111-1307, USA. 
 
@@ -22,12 +22,14 @@
 #include "Epi.h"
 
 
+// Ii+Sj->Ii+Ij (i,j=1,...,n) (infection, but no migration)
+// Ii-->Ri (death or recovery with immunity)
 
-//Ii+Si-->(ki)2Ii, infection process
-//Ii+Sj->Ii+Ij, cross infection (occurs in compartment j)
-//Ii-->(kr) Ri (death or recovery with immunity)
-//We compare theoretical and simulated mean outbreak sizes in a
-//complete symmetric network as we vary the leak
+// We compare theoretical and simulated mean outbreak sizes in a
+// complete symmetric network as we vary the leak. Theoretical outbreak
+// sizes are based on the branching process approximation, assuming
+// large compartment size, and small leak. 
+
 int main(int argc, char *argv[]){
 
   int mainargs=0;

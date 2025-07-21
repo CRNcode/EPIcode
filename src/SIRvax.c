@@ -1,19 +1,19 @@
-/* Copyright (C) 2024, Murad Banaji
+/* Copyright (C) 2024-5, Murad Banaji
  *
- * This file is part of EPIcomp, for compartmental models in epidemiology
+ * This file is part of EPIcode, for compartmental models in epidemiology
  *
- * EPIcomp is free software; you can redistribute it and/or 
+ * EPIcode is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2, 
  * or (at your option) any later version.
  *
- * EPIcomp is distributed in the hope that it will be useful, but
+ * EPIcode is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EPIcomp: see the file COPYING.  If not, write to 
+ * along with EPIcode: see the file COPYING.  If not, write to 
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330, 
  * Boston, MA 02111-1307, USA. 
 
@@ -21,12 +21,16 @@
 
 #include "Epi.h"
 
+// Variable graph topology, but identical compartments
+// Ii+Sj->Ii+Ij (i,j=1,...,n) (infection, but no migration)
+// Ii-->Ri (death or recovery with immunity)
 
-//To compute theoretical and simulated expected outbreak sizes
-//as a function of prior immunity
-//Ii+Si-->(ki)2Ii, infection process
-//Ii+Sj->Ii+Ij, cross infection 
-//Ii-->(kr) Ri (death or recovery with immunity)
+// To compute theoretical and simulated expected outbreak sizes
+// as a function of prior random immunity: illustrates that
+// even when compartmentalisation does not reduce expected
+// outbreak size, some random immunity can have a greater protective
+// effect in a compartmental model than a homogeneous model. 
+
 int main(int argc, char *argv[]){
 
   int opt, mainargs=0;

@@ -1,19 +1,19 @@
-/* Copyright (C) 2024, Murad Banaji
+/* Copyright (C) 2024-5, Murad Banaji
  *
- * This file is part of EPIcomp, for compartmental models in epidemiology
+ * This file is part of EPIcode, for compartmental models in epidemiology
  *
- * EPIcomp is free software; you can redistribute it and/or 
+ * EPIcode is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
  * as published by the Free Software Foundation; either version 2, 
  * or (at your option) any later version.
  *
- * EPIcomp is distributed in the hope that it will be useful, but
+ * EPIcode is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with EPIcomp: see the file COPYING.  If not, write to 
+ * along with EPIcode: see the file COPYING.  If not, write to 
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330, 
  * Boston, MA 02111-1307, USA. 
 
@@ -21,9 +21,14 @@
 
 #include "Epi.h"
 
+// Variable graph topology, but identical compartments
+// Ii+Sj->Ii+Ij (i,j=1,...,n) (infection, but no migration)
+// Ii-->Ri (death or recovery with immunity)
 
-//Get the expected outbreak sizes along a trajectory from data
-//Need to input the correct network type
+// Get the expected outbreak sizes along a trajectory from data
+// Need to input the correct network type.
+// Starts by projecting the state onto the disease-free states
+
 int main(int argc, char *argv[]){
   if(argc<9){
     fprintf(stderr, "ERROR: expecting at least the followng arguments:\n\tinput file\n\toutput file\n\t\"secondruns\" (to find expected outbreak size)\n\t\"RepNo\" (basic reproduction number)\n\t\"leak\" (fraction of out-infections X compartment population)\n\t\"Nc\" (compartment population)\n\t\"gridtype\" (see source file for available types)\n\tnumber of compartments\"Nc\", or \"Nx\" and \"Ny\" for a 2D grid\n\nEXITING\n");exit(0);

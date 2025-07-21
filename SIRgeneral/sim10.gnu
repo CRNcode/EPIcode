@@ -17,11 +17,11 @@ set yrange [0:100]
 #set ytics ("max" 1.0)
 set lmargin 8
 set bmargin 4
-set xlabel "leak ϴ"
+set xlabel "ϴ N_c"
 set ylabel "mean outbreak size (normalised)"
 set key bottom right
 
-set title "outbreak size as a function of the leak"
+set title "complete, symmetric networks"
 plot 'outfiles/sim_10_1000' using ($1):(100*$2) w l ls 4 t "theory (N_c = 1000)", \
 	 'outfiles/sim_10_100' using ($1):(100*$3) w p ls 3 t "simulation (N_c = 100)", \
 	 'outfiles/sim_10_200' using ($1):(100*$3) w p ls 6 t "simulation (N_c = 200)", \

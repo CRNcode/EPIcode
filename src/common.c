@@ -1,3 +1,24 @@
+/* Copyright (C) 2024-5, Murad Banaji
+ *
+ * This file is part of EPIcode, for compartmental models in epidemiology
+ *
+ * EPIcode is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License 
+ * as published by the Free Software Foundation; either version 2, 
+ * or (at your option) any later version.
+ *
+ * EPIcode is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with EPIcode: see the file COPYING.  If not, write to 
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330, 
+ * Boston, MA 02111-1307, USA. 
+
+ */
+
 #include "Epi.h"
 
 double **dmatrix(long nrl, long nrh, long ncl, long nch)
@@ -714,6 +735,7 @@ double SIRintensity(int **S, int **I, double **V, double **epsM, double ki, doub
   return a0;
 }
 
+//Get the approximate number of compartments affected
 int episz(int *R, int *R0, int ncomp, int Nc, double *mean_outbreak_sz, double *mean_outbreak_sz_cond, int *totepis){
   int i,epsz=0;
   for(i=0;i<ncomp;i++){
@@ -2279,7 +2301,7 @@ double **alphapolyA(double eps, double RepNo, int Nc, int maxcomp, double prior)
   //via Lambert W function
   //det_sz=(double)Nc*(s0+boost::math::lambert_w0(-(1.0-eps)*s0*RepNo*exp(-(1.0-eps)*s0*RepNo))/((1.0-eps)*RepNo));
   //uncorrect R0
-  det_sz=(double)Nc*(s0+boost::math::lambert_w0(-s0*RepNo*exp(-(1.0-eps)*s0*RepNo))/(RepNo));
+  det_sz=(double)Nc*(s0+boost::math::lambert_w0(-s0*RepNo*exp(-s0*RepNo))/(RepNo));
 
   if(maxcomp==1)
     a=1.0;

@@ -40,7 +40,7 @@ plot 'outfiles/leak_2.0_0.0_10.0_50_5_15_2' using ($1):(100*$2) w p ls 1 t "simu
 set terminal pngcairo size 500,400 enhanced font 'Verdana,14'
 set xrange [0:1]
 set xlabel "ϴ/ϴ_{max}"
-set ylabel "mean outbreak size"
+set ylabel "mean outbreak size (normalised)"
 #complete, symmetric with 100 compartments (N_c=10)
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_9.9_10_1_100 10000 2.0 0.0 9.9 10 1 100
 set title "complete, symmetric network"
@@ -49,7 +49,7 @@ plot 'outfiles/leak_2.0_0.0_9.9_10_1_100' using ($1):(100*$2) w p ls 1 notitle
 
 #ring (no rewiring, N_c=20)
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_16.0_20_3_100_4_0.0 1000 02.0 0.0 16.0 20 3 100 4 0.0
-set title "ring network"
+set title "rings"
 set output 'plots/leak_2.0_0.0_16.0_20_3_100_4_0.0.png'
 plot 'outfiles/leak_2.0_0.0_16.0_20_3_100_4_0.0' using ($1):(100*$2) w p ls 1 notitle
 
@@ -57,13 +57,13 @@ plot 'outfiles/leak_2.0_0.0_16.0_20_3_100_4_0.0' using ($1):(100*$2) w p ls 1 no
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_3_100_4_0.0 10000 2.0 0.0 8.0 10 3 100 4 0.0
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_16.0_20_3_100_4_0.0 10000 2.0 0.0 16.0 20 3 100 4 0.0
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_32.0_40_3_100_4_0.0 10000 2.0 0.0 32.0 40 3 100 4 0.0
-set title "ring networks"
+set title "rings"
 set output 'plots/leak_2.0_0.0_X_X_3_100_4_0.0.png'
 plot 'outfiles/leak_2.0_0.0_8.0_10_3_100_4_0.0' using ($1):(100*$2) w lp ls 1 t "N_c=10", 'outfiles/leak_2.0_0.0_16.0_20_3_100_4_0.0' using ($1):(100*$2) w lp ls 2 t "N_c=20", 'outfiles/leak_2.0_0.0_32.0_40_3_100_4_0.0' using ($1):(100*$2) w lp ls 3 t "N_c=40",
 
 #2D grid (no rewiring)
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_4.0_5_4_10_10_0.0 10000 2.0 0.0 4.0 5 4 10 10 0.0
-set title "grid network"
+set title "grids"
 set output 'plots/leak_2.0_0.0_4.0_5_4_10_10_0.0.png'
 plot 'outfiles/leak_2.0_0.0_4.0_5_4_10_10_0.0' using ($1):(100*$2) w p ls 1 notitle,
 
@@ -72,7 +72,7 @@ plot 'outfiles/leak_2.0_0.0_4.0_5_4_10_10_0.0' using ($1):(100*$2) w p ls 1 noti
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_16.0_20_4_10_10_0.0 10000 2.0 0.0 16.0 20 4 10 10 0.0
 #./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_32.0_40_4_10_10_0.0 10000 2.0 0.0 32.0 40 4 10 10 0.0
 set key bottom right
-set title "grid networks"
+set title "grids"
 set output 'plots/leak_2.0_0.0_X_X_4_10_10_0.0.png'
 plot 'outfiles/leak_2.0_0.0_8.0_10_4_10_10_0.0' using ($1):(100*$2) w lp ls 1 t "N_c=10", 'outfiles/leak_2.0_0.0_16.0_20_4_10_10_0.0' using ($1):(100*$2) w lp ls 2 t "N_c=20", 'outfiles/leak_2.0_0.0_32.0_40_4_10_10_0.0' using ($1):(100*$2) w lp ls 3 t "N_c=40",
 
@@ -119,7 +119,7 @@ plot 'outfiles/leak_2.0_0.0_8.0_10_6_100_4' using ($1):(100*$2) w p ls 1 notitle
 set terminal pngcairo size 800,600 enhanced font 'Verdana,18'
 set key top left
 #put them together
-set title "outbreak sizes in models with small compartments"
+set title "various architectures, and small compartments"
 set output 'plots/leak_multi.png'
 plot 'outfiles/leak_2.0_0.0_9.9_10_1_100' using ($1):(100*$2) w lp ls 4 t "1", 'outfiles/leak_2.0_0.0_8.0_10_6_100_4' using ($1):(100*$2) w lp ls 1 t "2", 'outfiles/leak_2.0_0.0_8.0_10_4_10_10_0.0' using ($1):(100*$2) w lp ls 2 t "3", 'outfiles/leak_2.0_0.0_8.0_10_3_100_4_0.0' using ($1):(100*$2) w lp ls 3 t "4", 
 #1: complete, symmetric network

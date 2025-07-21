@@ -78,7 +78,7 @@ plot 'outfiles/vax_protect_2.0_2.5_50_2_30_0.1_0_c3' using ($1):($2):($1-$1):($3
 
 #ring
 #./bin/SIRimmunity 1000 10000 2.0 4.0 50 3 100 4 0.1
-set title "ring network"
+set title "small-world ring"
 set output 'plots/sw2.0_4.0_50_3_100_4_0.1.png'
 plot 'outfiles/vax_protect_sw2.0_4.0_50_3_100_4_0.1' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_sw2.0_4.0_50_3_100_4_0.1' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -86,7 +86,7 @@ plot 'outfiles/vax_protect_sw2.0_4.0_50_3_100_4_0.1' using ($1):($2):($1-$1):($3
 
 #ring (constant infectivity)
 #./bin/SIRimmunity -c1 5000 10 1000 2.0 4.0 50 3 100 4 0.1
-set title "ring network (constant infectivity)"
+set title "small-world ring (constant infectivity)"
 set output 'plots/sw_2.0_4.0_50_3_100_4_0.1_c1.png'
 plot 'outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c1' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c1' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -94,7 +94,7 @@ plot 'outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c1' using ($1):($2):($1-$1):($
 
 #ring (constant susceptibility)
 #./bin/SIRimmunity -c3 5000 10 1000 2.0 4.0 50 3 100 4 0.1
-set title "ring network (constant susceptibility)"
+set title "small-world ring (constant susceptibility)"
 set output 'plots/sw_2.0_4.0_50_3_100_4_0.1_c3.png'
 plot 'outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c3' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c3' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -103,7 +103,7 @@ plot 'outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c3' using ($1):($2):($1-$1):($
 #2D
 #./bin/SIRimmunity 1000 10000 2.0 3.5 50 4 19 13 0.05
 #set title "grid network"
-set title "2D lattice based small world network"
+set title "small-world grid"
 set output 'plots/swgrid_2.0_3.5_50_4_19_13_0.05.png'
 plot 'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -111,7 +111,7 @@ plot 'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05' using ($1):($2):($1-$1):($3-
 
 #2D (constant infectivity)
 #./bin/SIRimmunity -c1 5000 10 1000 2.0 3.5 50 4 19 13 0.05
-set title "grid network (constant infectivity)"
+set title "small-world grid (constant infectivity)"
 set output 'plots/swgrid_2.0_3.5_50_4_19_13_0.05_c1.png'
 plot 'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c1' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c1' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -119,7 +119,7 @@ plot 'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c1' using ($1):($2):($1-$1):(
 
 #2D (constant susceptibility)
 #./bin/SIRimmunity -c3 5000 10 1000 2.0 3.5 50 4 19 13 0.05
-set title "grid network (constant susceptibility)"
+set title "small-world grid (constant susceptibility)"
 set output 'plots/swgrid_2.0_3.5_50_4_19_13_0.05_c3.png'
 plot 'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c3' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c3' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -151,7 +151,7 @@ plot 'outfiles/vax_protect_2.0_3.0_50_6_30_8_c3' using ($1):($2):($1-$1):($3-$2)
 
 #ring preferential
 #./bin/SIRimmunity 1000 10000 2.0 2.5 5 7 200 10 4 1
-set title "ring-preferential network)"
+set title "ring-preferential network"
 set output 'plots/rsf_2.0_2.5_5_7_200_10_4_1.png'
 plot 'outfiles/vax_protect_2.0_2.5_5_7_200_10_4_1' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_2.5_5_7_200_10_4_1' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -296,7 +296,7 @@ plot 	 'outfiles/vax_protect_2.0_1_1_6_200_5_c2' using ($1):($2):($1-$1):($3-$2)
 
 #individual grid (no rewiring)
 #./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.0
-set title "individual grid network (no rewiring)"
+set title "individual-based grid (no rewiring)"
 set output 'plots/grid_3.0_1_1_4_15_15_0.0_c2.png'
 plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.0_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.0_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -304,7 +304,7 @@ plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.0_c2' using ($1):($2):($1-$1):($3
 
 #individual grid (5% rewiring)
 #./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.05
-set title "individual grid network (5% rewiring)"
+set title "individual-based grid (5% rewiring)"
 set output 'plots/grid_3.0_1_1_4_15_15_0.05_c2.png'
 plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.05_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.05_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -312,7 +312,7 @@ plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.05_c2' using ($1):($2):($1-$1):($
 
 #individual grid (10% rewiring)
 #./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.1
-set title "individual grid network (10% rewiring)"
+set title "individual-based grid (10% rewiring)"
 set output 'plots/grid_3.0_1_1_4_15_15_0.1_c2.png'
 plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.1_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.1_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -320,7 +320,7 @@ plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.1_c2' using ($1):($2):($1-$1):($3
 
 #individual grid (20% rewiring)
 #./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.2
-set title "individual grid network (20% rewiring)"
+set title "individual-based grid (20% rewiring)"
 set output 'plots/grid_3.0_1_1_4_15_15_0.2_c2.png'
 plot 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.2_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_3.0_1_1_4_15_15_0.2_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \

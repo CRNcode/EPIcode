@@ -15,7 +15,7 @@ set xrange [0:60]
 #set ytics ("max" 1.0)
 set lmargin 10
 set bmargin 4
-set xlabel "prior immunity (%)"
+set xlabel "prior random immunity (%)"
 set ylabel "mean outbreak size (%)"
 
 #set label "infected" at -2,0.4 rotate left  font "Times,16"
@@ -35,7 +35,7 @@ plot 'outfiles/vax_1_10000a' using ($1*100):($3*100) w l lc "black" lw 2 t "theo
 #set terminal pngcairo size 1000,500 enhanced font 'Verdana,14'
 set title "Outbreak sizes as a function of random immunity"
 set output 'plots/vax_multi.png'
-plot 'outfiles/vax_2.0_15.0_100_4_10_10_0.0' using ($1*100):($4*100) w lp ls 1 t "2D lattice", 'outfiles/vax_2.0_25.0_100_3_100_4_0.1' using ($1*100):($4*100) w lp ls 4 t "ring", 'outfiles/vax_2.0_15.0_100_4_10_10_0.05' using ($1*100):($2*100) w l lc "black" lw 2 t "homogeneous case",
+plot 'outfiles/vax_2.0_15.0_100_4_10_10_0.0' using ($1*100):($4*100) w lp ls 1 t "small-world grid", 'outfiles/vax_2.0_25.0_100_3_100_4_0.1' using ($1*100):($4*100) w lp ls 4 t "small-world ring", 'outfiles/vax_2.0_15.0_100_4_10_10_0.05' using ($1*100):($2*100) w l lc "black" lw 2 t "homogeneous case",
 #'outfiles/vax_2.0_20.0_100_6_100_6' using ($1*100):($4*100) w lp ls 3 t "random", 
 
 
