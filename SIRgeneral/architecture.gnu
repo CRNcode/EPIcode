@@ -98,7 +98,7 @@ set key top left
 #./bin/SIRring 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
 set title "small-world rings"
-set xlabel "rewiring probability"
+set xlabel "rewiring probability (%)"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4.png'
 plot 'outfiles/sw_rewire_2.0_4.0_50_100_4' using (100*($1)):($2) with circles lc rgb "blue" t "each grid", \
@@ -107,7 +107,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4' using (100*($1)):($2) with circles lc
 #./bin/SIRring -c1 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
 set title "small-world rings (constant infectivity)"
-set xlabel "rewiring probability"
+set xlabel "rewiring probability (%)"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4_c1.png'
 plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c1' using (100*($1)):($2) with circles lc rgb "blue" t "each grid", \
@@ -116,7 +116,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c1' using (100*($1)):($2) with circles
 #./bin/SIRring -c3 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
 set title "small-world rings (constant susceptibility)"
-set xlabel "rewiring probability"
+set xlabel "rewiring probability (%)"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4_c3.png'
 plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c3' using (100*($1)):($2) with circles lc rgb "blue" t "each grid", \

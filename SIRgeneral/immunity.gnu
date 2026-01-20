@@ -160,7 +160,8 @@ plot 'outfiles/vax_protect_2.0_2.5_5_7_200_10_4_1' using ($1):($2):($1-$1):($3-$
 
 #ring preferential (small compartments)
 #./bin/SIRimmunity -c2 5000 50 1000 2.0 2.0 5 7 200 20 4 1
-set title "ring-preferential network (N_c=5)"
+set title "N_c=5"
+set yrange [0:12]
 set output 'plots/rsf_2.0_2.0_5_7_200_20_4_1_c2.png'
 plot 'outfiles/vax_protect_2.0_2.0_5_7_200_20_4_1_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_2.0_5_7_200_20_4_1_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -168,7 +169,7 @@ plot 'outfiles/vax_protect_2.0_2.0_5_7_200_20_4_1_c2' using ($1):($2):($1-$1):($
 
 #ring preferential (medium compartments)
 #./bin/SIRimmunity -c2 5000 50 1000 2.0 2.5 10 7 200 20 4 1
-set title "ring-preferential network (N_c=10)"
+set title "N_c=10"
 set output 'plots/rsf_2.0_2.5_10_7_200_20_4_1_c2.png'
 plot 'outfiles/vax_protect_2.0_2.5_10_7_200_20_4_1_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_2.5_10_7_200_20_4_1_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -176,7 +177,7 @@ plot 'outfiles/vax_protect_2.0_2.5_10_7_200_20_4_1_c2' using ($1):($2):($1-$1):(
 
 #ring preferential (larger compartments)
 #./bin/SIRimmunity -c2 5000 50 1000 2.0 3.0 20 7 200 20 4 1
-set title "ring-preferential network (N_c=20)"
+set title "N_c=20"
 set output 'plots/rsf_2.0_3.0_20_7_200_20_4_1_c2.png'
 plot 'outfiles/vax_protect_2.0_3.0_20_7_200_20_4_1_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_3.0_20_7_200_20_4_1_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -184,12 +185,12 @@ plot 'outfiles/vax_protect_2.0_3.0_20_7_200_20_4_1_c2' using ($1):($2):($1-$1):(
 
 #ring preferential (even larger compartments)
 #./bin/SIRimmunity -c2 5000 50 1000 2.0 3.0 40 7 200 20 4 1
-set title "ring-preferential network (N_c=40)"
+set title "N_c=40"
 set output 'plots/rsf_2.0_3.0_40_7_200_20_4_1_c2.png'
 plot 'outfiles/vax_protect_2.0_3.0_40_7_200_20_4_1_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
      'outfiles/vax_protect_2.0_3.0_40_7_200_20_4_1_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
          'outfiles/vax_protect_2.0_3.0_40_7_200_20_4_1_c2' using ($1):($3) w p ls 2 t "random immunity",
-
+unset yrange
 
 #Preferential attachment to ring, constant infectivity
 #./bin/SIRimmunity -c1 5000 50 1000 2.0 4.0 5 7 200 10 6 3
@@ -256,7 +257,7 @@ set terminal pngcairo size 600,400 enhanced font 'Verdana,14'
 
 #individual based ring preferential (variable infectivity)
 #./bin/SIRimmunity -c2 5000 50 1000 2.0 1 1 7 200 10 2 2
-set title "individual ring-preferential network"
+set title "default network"
 set output 'plots/rsf_2.0_1_1_7_200_10_2_2_c2.png'
 plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_2_2_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_2.0_1_1_7_200_10_2_2_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -264,7 +265,7 @@ plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_2_2_c2' using ($1):($2):($1-$1):($
 
 #individual based ring preferential (constant infectivity)
 #./bin/SIRimmunity -c1 5000 50 1000 2.0 1 1 7 200 10 4 4
-set title "individual ring-preferential network (constant infectivity)"
+set title "constant infectivity"
 set output 'plots/rsf_2.0_1_1_7_200_10_4_4_c1.png'
 plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c1' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c1' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -272,7 +273,7 @@ plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c1' using ($1):($2):($1-$1):($
 
 #individual based ring preferential (constant susceptibility)
 #./bin/SIRimmunity -c3 5000 50 1000 2.0 1 1 7 200 10 6 3
-set title "individual ring-preferential (constant susceptibility)"
+set title "constant susceptibility"
 set output 'plots/rsf_2.0_1_1_7_200_10_6_3_c3.png'
 plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_6_3_c3' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_2.0_1_1_7_200_10_6_3_c3' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -280,7 +281,7 @@ plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_6_3_c3' using ($1):($2):($1-$1):($
 
 #individual based ring preferential (constant susceptibility)
 #./bin/SIRimmunity -c3 5000 50 1000 2.0 1 1 7 200 10 4 4
-set title "individual ring-preferential (constant susceptibility)"
+set title "constant susceptibility"
 set output 'plots/rsf_2.0_1_1_7_200_10_4_4_c3.png'
 plot 	 'outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c3' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c3' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
@@ -293,6 +294,51 @@ set output 'plots/random_2.0_1_1_6_200_5_c2.png'
 plot 	 'outfiles/vax_protect_2.0_1_1_6_200_5_c2' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
 	 'outfiles/vax_protect_2.0_1_1_6_200_5_c2' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
          'outfiles/vax_protect_2.0_1_1_6_200_5_c2' using ($1):($3) w p ls 2 t "random immunity",
+
+#individual random (default networks)
+#./bin/SIRimmunity 5000 50 1000 2.0 1 1 6 500 5
+set title "N_c = 1"
+set yrange [0:22]
+set output 'plots/random_2.0_1_1_6_500_5.png'
+plot 	 'outfiles/vax_protect_2.0_1_1_6_500_5' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
+	 'outfiles/vax_protect_2.0_1_1_6_500_5' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
+         'outfiles/vax_protect_2.0_1_1_6_500_5' using ($1):($3) w p ls 2 t "random immunity"
+	 
+
+#random N_c=10
+#./bin/SIRimmunity 5000 10 1000 2.0 3.5 10 6 200 5
+set title "N_c = 10"
+set output 'plots/random_2.0_3.5_10_6_200_5.png'
+plot 'outfiles/vax_protect_2.0_3.5_10_6_200_5' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
+     'outfiles/vax_protect_2.0_3.5_10_6_200_5' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
+         'outfiles/vax_protect_2.0_3.5_10_6_200_5' using ($1):($3) w p ls 2 t "random immunity",
+
+#random N_c=10
+#./bin/SIRimmunity 5000 10 1000 2.0 3.5 10 6 100 5
+set title "N_c = 10"
+set output 'plots/random_2.0_3.5_10_6_100_5.png'
+plot 'outfiles/vax_protect_2.0_3.5_10_6_100_5' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
+     'outfiles/vax_protect_2.0_3.5_10_6_100_5' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
+         'outfiles/vax_protect_2.0_3.5_10_6_100_5' using ($1):($3) w p ls 2 t "random immunity"
+
+
+#random N_c=20
+#./bin/SIRimmunity 5000 10 1000 2.0 3.5 20 6 100 5
+set title "N_c = 20"
+set output 'plots/random_2.0_3.5_20_6_100_5.png'
+plot 'outfiles/vax_protect_2.0_3.5_20_6_100_5' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
+     'outfiles/vax_protect_2.0_3.5_20_6_100_5' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
+         'outfiles/vax_protect_2.0_3.5_20_6_100_5' using ($1):($3) w p ls 2 t "random immunity"
+
+#random N_c=50
+#./bin/SIRimmunity 5000 10 1000 2.0 3.5 50 6 50 5
+set title "N_c = 50"
+set output 'plots/random_2.0_3.5_50_6_50_5.png'
+plot 'outfiles/vax_protect_2.0_3.5_50_6_50_5' using ($1):($2):($1-$1):($3-$2) w vectors nohead lc rgb 'black' notitle, \
+     'outfiles/vax_protect_2.0_3.5_50_6_50_5' using ($1):($2) w p ls 1 t "infection-acquired immunity", \
+         'outfiles/vax_protect_2.0_3.5_50_6_50_5' using ($1):($3) w p ls 2 t "random immunity",
+unset yrange
+
 
 #individual grid (no rewiring)
 #./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.0

@@ -1727,7 +1727,6 @@ double mean_SIR_outbreak(RNG &rng, int ncomp, double *V, int *S0, int *R0, doubl
   //fprintf(stderr, "initial R state: "); printvec(R0,ncomp);
 
   Scum[0]=0;
-
   for(i=0;i<ncomp;i++){
     Nc[i]=S0[i]+R0[i];S0tot+=S0[i];R0tot+=R0[i];pop_tot+=Nc[i];
     if(i>0&&Nc[i]!=Nc[0])
@@ -1737,7 +1736,6 @@ double mean_SIR_outbreak(RNG &rng, int ncomp, double *V, int *S0, int *R0, doubl
     else
       Scum[i+1]=Scum[i]+Nc[i];
   }
-  
   if(S0tot==0){//no susceptibles
     fprintf(stderr,"WARNING in \"mean_SIR_outbreak\": empty susceptible population, so no epidemic is possible.\n");
     return 0.0;
@@ -1753,10 +1751,11 @@ double mean_SIR_outbreak(RNG &rng, int ncomp, double *V, int *S0, int *R0, doubl
       do{r2 = (int)(runif(rng)*S0tot);}while(r2==S0tot);
     }
 
-    
     //in which compartment do they reside? (i0)
-    if(!choose_by_S && alleq)
+    if(!choose_by_S && alleq){
       i0=r2%ncomp;
+      //fprintf(stderr, "i0=%d\n",i0);
+    }
     else{
       for(i=0;i<ncomp;i++){
 	if(r2>Scum[i]&&r2<=Scum[i+1] &&S0[i]>0){//initial infection in comp. i
@@ -1764,7 +1763,7 @@ double mean_SIR_outbreak(RNG &rng, int ncomp, double *V, int *S0, int *R0, doubl
 	}
       }
     }
-
+    
 
     //introduce infection into i0
     S0[i0]--;I0[i0]++;totsims++;
@@ -1995,6 +1994,10 @@ void setgrid(RNG &rng, int gridtype, double **epsM, int **epsI, int ncomp, int N
   if(constout<0 || constout>3){
     fprintf(stderr, "ERROR in \"setgrid\": constout must be 0, 1, 2 or 3. Exiting.\n");exit(0);
   }
+
+  if(Nc==1 && fabs(leak-1.0)>1e-4){
+    fprintf(stderr, "ERROR in \"setgrid\": for an individual-based network, the leak must be 1. Exiting.\n");exit(0);
+  }
   
   inittozero(epsM,ncomp,ncomp);
   if(gridtype==1){//complete
@@ -2094,14 +2097,14 @@ void setgrid(RNG &rng, int gridtype, double **epsM, int **epsI, int ncomp, int N
   (*epsvar)/=(double)(ncomp*(ncomp-1));
 
   RepNoA=RepNo*msum(epsM,ncomp,ncomp)/(double)ncomp;
-  fprintf(fd, "\nset eps = %.4f, mean eps = %.4f, set \"R0\" = %.4f, actual \"R0\" = %.4f, eps_ij mean (SD) = %.4e (%.4e), mean path=%.4f, degree SD=%.4f, constout=%d\n", eps, (*mean_eps), RepNo, RepNoA, (*mean_eps)/(double)(ncomp-1), sqrt((*epsvar)), mean_path_length(epsI,ncomp), sqrt(degree_var(*sparse,ncomp)),constout);
+  fprintf(fd, "\nset eps = %.4f, mean eps = %.4f, set (naive) \"R0\" = %.4f, actual (naive) \"R0\" = %.4f, nextgen \"R0\" = %.4f, eps_ij mean (SD) = %.4e (%.4e), mean path=%.4f, degree SD=%.4f, constout=%d\n", eps, (*mean_eps), RepNo, RepNoA, RepNo*SpecRad(epsM,ncomp,1e-7), (*mean_eps)/(double)(ncomp-1), sqrt((*epsvar)), mean_path_length(epsI,ncomp), sqrt(degree_var(*sparse,ncomp)),constout);
   
 
   if(*sparse){
     fprintf(fd, "Network structure:\n");
     printsparse(fd, *sparse, ncomp);
   }
-  if((gridtype==2 || gridtype==3 || gridtype==4 || gridtype==5 || gridtype==6 || gridtype==7)){//variable out infection
+  if((gridtype==2 || gridtype==3 || gridtype==4 || gridtype==5 || gridtype==6 || gridtype==7 || gridtype==8)){//variable out infection
     fprintf(fd, "\nin/out/tot-infection values:\n");
     for(i=0;i<ncomp;i++){
       t=vsum(epsM[i],ncomp);

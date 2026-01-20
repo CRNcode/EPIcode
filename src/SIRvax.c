@@ -202,8 +202,8 @@ int main(int argc, char *argv[]){
       clq_sz=atoi(arg10);
       scalefree_clq=atoi(arg11);
     }
-    else if(gridtype!=1 &&gridtype!=8){
-      fprintf(stderr, "\"gridtype\" must be in the range 1-6. (Currently %d).\nEXITING.\n", gridtype);exit(0);
+    else if(gridtype!=1){
+      fprintf(stderr, "\"gridtype\" must be 1 or 3--7. (Currently %d).\nEXITING.\n", gridtype);exit(0);
     }
   }
 
@@ -236,11 +236,13 @@ int main(int argc, char *argv[]){
   fclose(fd2);
 
 
-  for(i=100;i>=0;i--){
+  //for(i=100;i>=0;i--){
+  for(i=100;i>=0;i-=5){
     S0frac=(double)i/double(100);R0frac=1.0-S0frac;
     scalefac=S0frac>0?max((1.0-1.0/(S0frac*RepNo)),0):0;
     det_sz_frac_cond=(S0frac+boost::math::lambert_w0(-S0frac*RepNo*exp(-RepNo*S0frac))/RepNo);
     det_sz_frac=scalefac*det_sz_frac_cond;//homogeneous case expected size
+    //fprintf(stderr, "%.4f\n", mean_outbreak_sym(leak, RepNo, Nc, ncomp, 1.0-S0frac));
     if(!theory_only){//run simulations
       sz_vax=0;
       for(j=0;j<numvax;j++){
@@ -252,7 +254,7 @@ int main(int argc, char *argv[]){
       if(i==100){
 	sz_vax_max=sz_vax;det_sz_max=det_sz_frac;
       }
-      if(gridtype==1)//complete, symmetric: also print the expected sizes
+      if(gridtype==1 && ncomp<=12)//complete, symmetric: also print the expected sizes
 	fprintf(fd1, "%.2f %.4f %.4f %.4f %.4f %.4f\n", R0frac, det_sz_frac, scalefac*mean_outbreak_sym(leak, RepNo, Nc, ncomp, 1.0-S0frac)*det_sz_frac_cond, det_sz_max,sz_vax,sz_vax_max);
       else
 	fprintf(fd1, "%.2f %.4f %.4f %.4f %.4f\n", R0frac, det_sz_frac,det_sz_max,sz_vax,sz_vax_max);

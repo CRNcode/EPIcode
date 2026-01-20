@@ -4,9 +4,9 @@ set output "plots/Epi5_all_Rt.png"
 #data created with ./bin/SIRgeneral 1 2.0 2.0 1000 1 5
 
 stats 'outfiles/Epi5_all_full_outbreakA' using 2 nooutput
-set title "Tracking measures of population protection during an outbreak"
+#set title "Tracking measures of population protection during an outbreak"
 set ytics 0.5 nomirror
-set ylabel 'R_t / expected outbreak size'
+set ylabel 'R / mean outbreak size'
 set y2tics 100 nomirror
 set y2label 'infections'
 set xlabel "time"

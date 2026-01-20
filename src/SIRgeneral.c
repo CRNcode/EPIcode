@@ -77,7 +77,7 @@ int main(int argc, char *argv[]){
 
   int totpop;
   
-  int printfull=1;//full output: long file; safest set to 0
+  int printfull=0;//full output: long file; safest set to 0
   int printmean=0;//do we want the mean output?
 
   int i,i1,j,jrun,iter,totepis;
@@ -90,6 +90,7 @@ int main(int argc, char *argv[]){
   double *V;
 
   int S0tot=0,R0tot=0, Stot,Rtot;
+  double S0frac,scalefac;
   int *Episz;//number of comps. infected at the end of Epi.
   int *Episzhist;//histogram of outbreak sizes
   double *outfrac;//fraction infected during outbreak
@@ -117,7 +118,7 @@ int main(int argc, char *argv[]){
   double meanfinalT=0.0;
   double det_sz;//deterministic expected epidemic size
 
-  double **alphap;
+  double **alphap=NULL;
   int **sparse=NULL;
   int brief=1;//avoid calculating Rt_nextgen and outbreak_P
   int Epihistnum=20;
@@ -144,7 +145,6 @@ int main(int argc, char *argv[]){
     }
   }
 
-  
   while(optind < argc){
     switch (mainargs) {
     case 0:
@@ -254,10 +254,13 @@ int main(int argc, char *argv[]){
   outfrac=(double*) malloc(sizeof(double) * (totruns+1));
   mean_outbreak_sz=(double*) malloc(sizeof(double) * (ncomp+1));
   mean_outbreak_sz_cond=(double*) malloc(sizeof(double) * (ncomp+1));
-  alphap=alphapoly(eps, RepNo, Nc, ncomp, 1);
-  
+  if(ncomp>1 && ncomp < 12)
+    alphap=alphapoly(eps, RepNo, Nc, ncomp, 1);
+
+
   inittozero(EpiHist, Epihistnum+1);
 
+  
   //random seeding
   timeint = time(&timepoint); /* set and convert time to an integer */
   srand(timeint);
@@ -369,8 +372,11 @@ int main(int argc, char *argv[]){
 
     //The deterministic epidemic size in the one-compartment case
     //See https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
-    det_sz=(1.0+boost::math::lambert_w0(-(double)S0tot/(double)totpop*RepNo*exp(-RepNo*(1.0-(double)R0tot/(double)totpop)))/RepNo);
-    fprintf(stderr, "Deterministic final outbreak size (%%) = %.4f\n", det_sz*100.0);
+    S0frac= (double)S0tot/(double)totpop;
+    scalefac=S0frac>0?max((1.0-1.0/(S0frac*RepNo)),0):0;//@@
+    //fprintf(stderr, "S0frac = %.4f\n", S0frac);
+    det_sz=(S0frac+boost::math::lambert_w0(-S0frac*RepNo*exp(-RepNo*S0frac))/RepNo);
+    fprintf(stderr, "Unconditional (deterministic) final outbreak size (%%) = %.4f\n", scalefac*det_sz*100.0);
     fprintf(stderr, "Stochastic mean final outbreak size (%%) = %.4f\n", mean_outbreak_sztot/(double)totruns/(double)totpop*100.0);
 
     if((gridtype==3 || gridtype==5 || gridtype==6) && (constout==0 || constout==2)){//variable out infection
@@ -403,7 +409,7 @@ int main(int argc, char *argv[]){
     }
     fprintf(fd3, ")\n");
 
-    if(gridtype==1){//theoretical results in the symmetric, complete, case
+    if(gridtype==1 && alphap){//theoretical results in the symmetric, complete, case
       fprintf(stderr, "Episz_expect: ");
       for(i=0;i<=ncomp;i++){
 	fprintf(stderr, "%d ", (int)(alphap[ncomp][i]*totepis));
@@ -437,7 +443,8 @@ int main(int argc, char *argv[]){
   free((char*)outfrac);free((char*)mean_outbreak_sz);
   free((char*)mean_outbreak_sz_cond);
   
-  free_dmatrix(alphap,ncomp+1,ncomp+1);
+  if(alphap)
+    free_dmatrix(alphap,ncomp+1,ncomp+1);
   if(sparse)
     free_imat(sparse,ncomp);
 

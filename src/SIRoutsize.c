@@ -185,6 +185,8 @@ int main(int argc, char *argv[]){
   }
 
   //run simulations
+  //set all infecteds to be recovered (projection onto disease-free states
+  //which preserves total population in each compartment
   while((linelen = gtline(fdin, linenew, maxl)) > 0){
     wdtime=getnthwd(linenew, 1);
     for(i=0;i<ncomp;i++){
