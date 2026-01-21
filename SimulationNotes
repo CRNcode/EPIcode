@@ -1,0 +1,436 @@
+#Simulations associated with the figures in "Outbreak dynamics and population vulnerability in stochastic epidemic models on networks"
+
+************
+
+#**Fig 2 "Tracking measures of population vulnerability during an outbreak"
+#Set variable "printfull" to 1 in source file src/SIRgeneral
+#Run the following a few times to get an outbreak hitting all compartments
+./bin/SIRgeneral 1 2.0 2.0 1000 1 5
+cp SIRgeneral/outfiles/Epincompout SIRgeneral/outfiles/Epi5_all_full
+./bin/resample SIRgeneral/outfiles/Epi5_all_full SIRgeneral/outfiles/Epi5_all_full_resampled 1.0
+./bin/SIRoutsize SIRgeneral/outfiles/Epi5_all_full_resampled SIRgeneral/outfiles/Epi5_all_full_outbreakA 50000 2.0 2.0 1000 1 5
+
+cd SIRgeneral && gnuplot Epi5_all_Rt.gnu && cd ..
+cp SIRgeneral/plots/Epi5_all_Rt.png ../../../publications/HITComp/pics
+
+************
+#**Fig 3 "Normalised outbreak size versus leak for various architectures"
+# [left]
+./bin/SIRcomplete SIRgeneral/outfiles/sim_10_1000 20000 2.0 1000 10
+./bin/SIRcomplete SIRgeneral/outfiles/sim_10_200 20000 2.0 200 10
+./bin/SIRcomplete SIRgeneral/outfiles/sim_10_100 20000 2.0 100 10
+cd SIRgeneral && gnuplot sim10.gnu && cd ..
+cp SIRgeneral/plots/sim_10.png ../../../publications/HITComp/pics
+
+# [right]
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_9.9_10_1_100 20000 2.0 0.0 9.9 10 1 100
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_3_100_4_0.0 20000 2.0 0.0 8.0 10 3 100 4 0.0
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_4_10_10_0.0 20000 2.0 0.0 8.0 10 4 10 10 0.0
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_6_100_4 20000 2.0 0.0 8.0 10 6 100 4
+cd SIRgeneral && gnuplot leakeffect.gnu && cd ..
+cp SIRgeneral/plots/leak_multi.png ../../../publications/HITComp/pics
+
+*************
+#**Fig 4 "Outbreak patterns in small-world grids" (stills extracted manually from raw images/vids)
+#SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.0_medium.mp4
+#SIRtorus/stills/sus_2.0_3.5_30_40_30_0.00_medium.png
+./bin/SIRtorus 1000 2.0 3.5 30 40 30 0.00
+cd SIRtorus && ./scr && cd ..
+cp SIRtorus/vids/heatall.mp4 SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.0_medium.mp4
+
+#SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.02_medium.mp4
+#SIRtorus/stills/sus_2.0_3.5_30_40_30_0.02_medium.png
+./bin/SIRtorus 1000 2.0 3.5 30 40 30 0.02
+cd SIRtorus && ./scr && cd ..
+cp SIRtorus/vids/heatall.mp4 SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.02_medium.mp4
+
+#SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.05_medium.mp4
+#SIRtorus/stills/sus_2.0_3.5_30_40_30_0.05_medium.png
+./bin/SIRtorus 1000 2.0 3.5 30 40 30 0.05
+cd SIRtorus && ./scr && cd ..
+cp SIRtorus/vids/heatall.mp4 SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.05_medium.mp4
+
+#SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.10_medium.mp4
+#SIRtorus/stills/sus_2.0_3.5_30_40_30_0.10_medium.png
+./bin/SIRtorus 1000 2.0 3.5 30 40 30 0.10
+cd SIRtorus && ./scr && cd ..
+cp SIRtorus/vids/heatall.mp4 SIRtorus/vids/heatall_2.0_3.5_30_40_30_0.10_medium.mp4
+
+
+*************
+#**Fig 5 "Outbreak size as we vary network architecture (default networks)"
+./bin/SIRgamma -c2 100 1000 2.0 2.5 50 30 0
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_gamma_multi
+cp SIRgeneral/outfiles/gamma_effect SIRgeneral/outfiles/gamma_effect_2.0_2.5_50_30_0
+cp SIRgeneral/outfiles/gamma_effect_mean SIRgeneral/outfiles/gamma_effect_mean_2.0_2.5_50_30_0
+
+./bin/SIRrandom 100 1000 2.0 2.5 50 100
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_random_multi
+cp SIRgeneral/outfiles/random_meandeg SIRgeneral/outfiles/random_meandeg_2.0_2.5_50_100
+cp SIRgeneral/outfiles/random_meandeg_mean SIRgeneral/outfiles/random_meandeg_mean_2.0_2.5_50_100
+
+./bin/SIRring 100 1000 2.0 4.0 50 100 4
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_sw_100_50_rewire
+cp SIRgeneral/outfiles/sw_rewire SIRgeneral/outfiles/sw_rewire_2.0_4.0_50_100_4
+cp SIRgeneral/outfiles/sw_rewire_mean SIRgeneral/outfiles/sw_rewire_mean_2.0_4.0_50_100_4
+
+./bin/SIRgrid 100 1000 2.0 3.5 30 19 13
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2Dsw_19_13_30_rewire
+cp SIRgeneral/outfiles/grid_rewire SIRgeneral/outfiles/grid_rewire_2.0_3.5_30_19_13
+cp SIRgeneral/outfiles/grid_rewire_mean SIRgeneral/outfiles/grid_rewire_mean_2.0_3.5_30_19_13
+
+#plots
+cd SIRgeneral && gnuplot architecture.gnu && cd ..
+cp SIRgeneral/plots/gamma_effect_2.0_2.5_50_30_0.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/random_meandeg_2.0_2.5_50_100.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/sw_rewire_2.0_4.0_50_100_4.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/grid_rewire_2.0_3.5_30_19_13.png ../../../publications/HITComp/pics
+
+
+***************
+#**Fig 6 "Outbreak sizes as a function of prior random immunity"
+# [top left]
+./bin/SIRvax SIRgeneral/outfiles/vax_1_10000a 1 10000 2.0 0.0 10000 1 1
+./bin/SIRvax SIRgeneral/outfiles/vax_2_5000a 1 10000 2.0 4.0 5000 1 2
+./bin/SIRvax SIRgeneral/outfiles/vax_10_1000a 1 10000 2.0 6.0 1000 1 10
+
+# [top right]
+./bin/SIRvax SIRgeneral/outfiles/vax_2.0_15.0_100_4_10_10_0.05 1 20000 2.0 15.0 100 4 10 10 0.05
+./bin/SIRvax SIRgeneral/outfiles/vax_2.0_25.0_100_3_100_4_0.1 1 20000 2.0 25.0 100 3 100 4 0.1
+
+# [bottom left]
+./bin/SIRvax SIRgeneral/outfiles/vax_2.0_20.0_1000_6_25_5 10 1000 2.0 20.0 1000 6 25 5
+
+# [bottom right]
+./bin/SIRvax SIRgeneral/outfiles/vax_2.0_20.0_2000_7_50_6_2_1 10 1000 2.0 20.0 2000 7 50 6 2 1
+
+#plots
+cd SIRgeneral && gnuplot vax.gnu && cd ..
+cp SIRgeneral/plots/vax_10c.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/vax_multi.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/vax_2.0_20.0_1000_6_25_5.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/vax_2.0_20.0_2000_7_50_6_2_1.png ../../../publications/HITComp/pics
+
+
+
+*************
+
+
+#**Fig 7 "Outbreak size versus prior immunity in default networks"
+
+#complete
+./bin/SIRimmunity 5000 10 1000 2.0 2.5 50 1 30
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_complete_2.0_2.5_50_1_30
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_complete_2.0_2.5_50_1_30
+
+#gamma
+./bin/SIRimmunity 5000 10 1000 2.0 2.5 50 2 30 0.1 0
+cp SIRgeneral/outfiles/ SIRgeneral/outfiles/network_properties_gamma_2.0_2.5_50_2_30_0.1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_gamma_2.0_2.5_50_2_30_0.1
+
+#ring
+./bin/SIRimmunity 5000 10 1000 2.0 4.0 50 3 100 4 0.1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_sw2.0_4.0_50_3_100_4_0.1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_sw2.0_4.0_50_3_100_4_0.1
+
+#grid
+./bin/SIRimmunity 5000 10 1000 2.0 3.5 50 4 19 13 0.05
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.5_50_4_19_13_0.05
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05
+
+#random
+./bin/SIRimmunity 5000 10 1000 2.0 3.0 50 6 30 8
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.0_50_6_30_8
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.0_50_6_30_8
+
+#ring-preferential
+./bin/SIRimmunity 5000 50 1000 2.0 2.5 5 7 200 10 4 1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_2.5_5_7_200_10_4_1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_2.5_5_7_200_10_4_1
+
+#plots
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/complete_2.0_2.5_50_1_30.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/gamma_2.0_2.5_50_2_30_0.1_0.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/sw2.0_4.0_50_3_100_4_0.1.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/swgrid_2.0_3.5_50_4_19_13_0.05.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/random_2.0_3.0_50_6_30_8.png ../../../publications/HITComp/pics
+cp SIRgeneral/plots/rsf_2.0_2.5_5_7_200_10_4_1.png ../../../publications/HITComp/pics
+
+
+*************
+#**Fig S1 "The response of normalised outbreak size to mean leak across architectures"
+
+#ring
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_3_100_4_0.0 10000 2.0 0.0 8.0 10 3 100 4 0.0
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_16.0_20_3_100_4_0.0 10000 2.0 0.0 16.0 20 3 100 4 0.0
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_32.0_40_3_100_4_0.0 10000 2.0 0.0 32.0 40 3 100 4 0.0
+
+#grid
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_4_10_10_0.0 10000 2.0 0.0 8.0 10 4 10 10 0.0
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_16.0_20_4_10_10_0.0 10000 2.0 0.0 16.0 20 4 10 10 0.0
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_32.0_40_4_10_10_0.0 10000 2.0 0.0 32.0 40 4 10 10 0.0
+
+#random
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_4.0_5_6_100_4 10000 2.0 0.0 4.0 5 6 100 4
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_6_100_4 10000 2.0 0.0 8.0 10 6 100 4
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_16.0_20_6_100_4 10000 2.0 0.0 16.0 20 6 100 4
+
+#ring-preferential
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_6.67_10_7_100_10_2_1 10000 2.0 0.0 6.67 10 7 100 10 2 1
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_13.33_20_7_100_10_2_1 10000 2.0 0.0 13.33 20 7 100 10 2 1
+./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_26.67_40_7_100_10_2_1 10000 2.0 0.0 26.67 40 7 100 10 2 1
+
+cd SIRgeneral && gnuplot leakeffect.gnu && cd ..
+cp SIRgeneral/plots/leak_2.0_0.0_X_X_3_100_4_0.0.png SIRgeneral/plots/leak_2.0_0.0_X_X_4_10_10_0.0.png SIRgeneral/plots/leak_2.0_0.0_X_X_6_100_4.png SIRgeneral/plots/leak_2.0_0.0_X_X_7_100_10_2_1.png ../../../publications/HITComp/pics
+
+**************
+#**Fig S2 "Outbreak size as we vary network architecture in constant-infectivity networks"
+
+#Gamma
+./bin/SIRgamma -c1 100 1000 2.0 2.5 50 30 0
+cp SIRgeneral/outfiles/gamma_effect SIRgeneral/outfiles/gamma_effect_2.0_2.5_50_30_0_c1
+cp SIRgeneral/outfiles/gamma_effect_mean SIRgeneral/outfiles/gamma_effect_mean_2.0_2.5_50_30_0_c1
+
+#Random
+./bin/SIRrandom -c1 100 1000 2.0 3.0 50 100
+cp SIRgeneral/outfiles/random_meandeg SIRgeneral/outfiles/random_meandeg_2.0_3.0_50_100_c1
+cp SIRgeneral/outfiles/random_meandeg_mean SIRgeneral/outfiles/random_meandeg_mean_2.0_3.0_50_100_c1
+
+#Ring
+./bin/SIRring -c1 100 1000 2.0 4.0 50 100 4
+cp SIRgeneral/outfiles/sw_rewire SIRgeneral/outfiles/sw_rewire_2.0_4.0_50_100_4_c1
+cp SIRgeneral/outfiles/sw_rewire_mean SIRgeneral/outfiles/sw_rewire_mean_2.0_4.0_50_100_4_c1
+
+#grid
+./bin/SIRgrid -c1 100 1000 2.0 3.5 30 19 13
+cp SIRgeneral/outfiles/grid_rewire SIRgeneral/outfiles/grid_rewire_2.0_3.5_30_19_13_c1
+cp SIRgeneral/outfiles/grid_rewire SIRgeneral/outfiles/grid_rewire_mean_2.0_3.5_30_19_13_c1
+
+#plots
+cd SIRgeneral && gnuplot architecture.gnu && cd ..
+cp SIRgeneral/plots/gamma_effect_2.0_2.5_50_30_0_c1.png SIRgeneral/plots/random_meandeg_2.0_3.0_50_100_c1.png SIRgeneral/plots/sw_rewire_2.0_4.0_50_100_4_c1.png SIRgeneral/plots/grid_rewire_2.0_3.5_30_19_13_c1.png ../../../publications/HITComp/pics
+
+
+*************
+#**Fig S3 "Outbreak size as we vary network architecture in constant-susceptibility networks"
+
+#Gamma
+./bin/SIRgamma -c3 100 1000 2.0 2.5 50 30 0
+cp SIRgeneral/outfiles/gamma_effect SIRgeneral/outfiles/gamma_effect_2.0_2.5_50_30_0_c3
+cp SIRgeneral/outfiles/gamma_effect_mean SIRgeneral/outfiles/gamma_effect_mean_2.0_2.5_50_30_0_c3
+
+#Random
+./bin/SIRrandom -c3 100 1000 2.0 3.0 50 100
+cp SIRgeneral/outfiles/random_meandeg SIRgeneral/outfiles/random_meandeg_2.0_3.0_50_100_c3
+cp SIRgeneral/outfiles/random_meandeg_mean SIRgeneral/outfiles/random_meandeg_mean_2.0_3.0_50_100_c3
+
+#Ring
+./bin/SIRring -c3 100 1000 2.0 4.0 50 100 4
+cp SIRgeneral/outfiles/sw_rewire SIRgeneral/outfiles/sw_rewire_2.0_4.0_50_100_4_c3
+cp SIRgeneral/outfiles/sw_rewire_mean SIRgeneral/outfiles/sw_rewire_mean_2.0_4.0_50_100_4_c3
+
+#grid
+./bin/SIRgrid -c3 100 1000 2.0 3.5 30 19 13
+cp SIRgeneral/outfiles/grid_rewire SIRgeneral/outfiles/grid_rewire_2.0_3.5_30_19_13_c3
+cp SIRgeneral/outfiles/grid_rewire_mean SIRgeneral/outfiles/grid_rewire_mean_2.0_3.5_30_19_13_c3
+
+#plots
+cd SIRgeneral && gnuplot architecture.gnu && cd ..
+cp SIRgeneral/plots/gamma_effect_2.0_2.5_50_30_0_c3.png SIRgeneral/plots/random_meandeg_2.0_3.0_50_100_c3.png SIRgeneral/plots/sw_rewire_2.0_4.0_50_100_4_c3.png SIRgeneral/plots/grid_rewire_2.0_3.5_30_19_13_c3.png ../../../publications/HITComp/pics
+
+
+***************
+
+#**Fig S4 "Outbreak sizes versus prior random immunity in random and ring-preferential networks"
+
+# Edited SIRvax.c for speed: "for(i=100;i>=0;i--)" --> "for(i=100;i>=0;i-=5)"
+
+#random network
+./bin/SIRvax SIRgeneral/outfiles/vax_2.0_667_1000_6_20_6 10 1000 2.0 667 1000 6 20 6
+
+#ring-preferential network
+./bin/SIRvax SIRgeneral/outfiles/vax_2.0_667_1000_7_20_4_2_1 10 1000 2.0 667 1000 7 20 4 2 1
+
+#plots
+cd SIRgeneral && gnuplot vax.gnu && cd ..
+
+
+***************
+
+
+#**Fig S5 "Outbreak size versus prior immunity in random networks with varying subpopulation size"
+
+#random individual
+./bin/SIRimmunity 5000 50 1000 2.0 1 1 6 500 5
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_1_1_6_500_5
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_1_1_6_500_5
+
+#random N_c=10
+./bin/SIRimmunity 50000 10 1000 2.0 3.5 10 6 100 5
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.5_10_6_100_5
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.5_10_6_100_5
+
+
+#random N_c=20
+./bin/SIRimmunity 5000 10 1000 2.0 3.5 20 6 100 5
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.5_20_6_100_5
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.5_20_6_100_5
+
+#random N_c=50
+./bin/SIRimmunity 5000 10 1000 2.0 3.5 50 6 50 5
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.5_50_6_50_5
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.5_50_6_50_5
+
+#plots
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/random_2.0_1_1_6_500_5.png SIRgeneral/plots/random_2.0_3.5_10_6_100_5.png SIRgeneral/plots/random_2.0_3.5_20_6_100_5.png SIRgeneral/plots/random_2.0_3.5_50_6_50_5.png  ../../../publications/HITComp/pics
+
+
+*****************
+#**Fig S6 "Outbreak size versus prior immunity in ring-preferential networks with varying subpopulation size"
+
+#ring-preferential varying sizes
+./bin/SIRimmunity -c2 5000 50 1000 2.0 2.0 5 7 200 20 4 1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_2.0_5_7_200_20_4_1_c2
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_2.0_5_7_200_20_4_1_c2
+
+./bin/SIRimmunity -c2 5000 50 1000 2.0 2.5 10 7 200 20 4 1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_2.5_10_7_200_20_4_1_c2
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_2.5_10_7_200_20_4_1_c2
+
+./bin/SIRimmunity -c2 5000 50 1000 2.0 3.0 20 7 200 20 4 1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.0_20_7_200_20_4_1_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.0_20_7_200_20_4_1_c2
+
+./bin/SIRimmunity -c2 5000 50 1000 2.0 3.0 40 7 200 20 4 1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.0_40_7_200_20_4_1_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.0_40_7_200_20_4_1_c2
+
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/rsf_2.0_2.0_5_7_200_20_4_1_c2.png SIRgeneral/plots/rsf_2.0_2.5_10_7_200_20_4_1_c2.png SIRgeneral/plots/rsf_2.0_3.0_20_7_200_20_4_1_c2.png SIRgeneral/plots/rsf_2.0_3.0_40_7_200_20_4_1_c2.png ../../../publications/HITComp/pics
+
+**************
+#**Fig S7 "Outbreak size versus prior immunity in individual-based small-world grids"
+
+#individual grids with increasing rewiring
+./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.0
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_3.0_1_1_4_15_15_0.0_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_3.0_1_1_4_15_15_0.0_c2
+
+./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.05
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_3.0_1_1_4_15_15_0.05_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_3.0_1_1_4_15_15_0.05_c2
+
+./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_3.0_1_1_4_15_15_0.1_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_3.0_1_1_4_15_15_0.1_c2
+
+./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.2
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_3.0_1_1_4_15_15_0.2_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_3.0_1_1_4_15_15_0.2_c2
+
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/grid_3.0_1_1_4_15_15_0.0_c2.png SIRgeneral/plots/grid_3.0_1_1_4_15_15_0.05_c2.png SIRgeneral/plots/grid_3.0_1_1_4_15_15_0.1_c2.png SIRgeneral/plots/grid_3.0_1_1_4_15_15_0.2_c2.png ../../../publications/HITComp/pics
+
+
+***************
+#**Fig S8 "Outbreak size versus prior immunity in individual-based ring-preferential networks"
+
+#Ring preferential individual-based: default and constant infectivity/susceptibility
+./bin/SIRimmunity -c2 5000 50 1000 2.0 1 1 7 200 10 2 2
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_1_1_7_200_10_2_2_c2
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_1_1_7_200_10_2_2_c2
+
+./bin/SIRimmunity -c1 5000 50 1000 2.0 1 1 7 200 10 4 4
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_1_1_7_200_10_4_4_c1
+
+./bin/SIRimmunity -c3 5000 50 1000 2.0 1 1 7 200 10 4 4
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_1_1_7_200_10_4_4_c3
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_1_1_7_200_10_4_4_c3
+
+./bin/SIRimmunity -c3 5000 50 1000 2.0 1 1 7 200 10 6 3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_1_1_7_200_10_6_3_c3
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_1_1_7_200_10_6_3_c3
+
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/rsf_2.0_1_1_7_200_10_2_2_c2.png SIRgeneral/plots/rsf_2.0_1_1_7_200_10_4_4_c1.png SIRgeneral/plots/rsf_2.0_1_1_7_200_10_4_4_c3.png SIRgeneral/plots/rsf_2.0_1_1_7_200_10_6_3_c3.png ../../../publications/HITComp/pics
+
+
+***************
+#**Fig S9 "Outbreak size versus prior immunity in constant-infectivity networks" 
+#constant infectivity
+
+#complete
+./bin/SIRimmunity 5000 10 1000 2.0 2.5 50 1 30
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_complete_2.0_2.5_50_1_30
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_complete_2.0_2.5_50_1_30
+
+#gamma
+./bin/SIRimmunity -c1 5000 10 1000 2.0 2.5 50 2 30 0.1 0
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_2.5_50_2_30_0.1_0_c1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_2.5_50_2_30_0.1_0_c1
+
+#Ring small-world
+./bin/SIRimmunity -c1 5000 10 1000 2.0 4.0 50 3 100 4 0.1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_4.0_50_3_100_4_0.1_c1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c1
+
+#grid small-world
+./bin/SIRimmunity -c1 5000 10 1000 2.0 3.5 50 4 19 13 0.05
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.5_50_4_19_13_0.05_c1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c1
+
+#random
+./bin/SIRimmunity -c1 5000 10 1000 2.0 3.0 50 6 30 8
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.0_50_6_30_8_c1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.0_50_6_30_8_c1
+
+#ring-preferential
+./bin/SIRimmunity -c1 5000 50 1000 2.0 4.0 5 7 200 10 6 3
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_4.0_5_7_200_10_6_3_c1
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_4.0_5_7_200_10_6_3_c1
+
+#plots
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/complete_2.0_2.5_50_1_30.png SIRgeneral/plots/gamma_2.0_2.5_50_2_30_0.1_0_c1.png SIRgeneral/plots/sw_2.0_4.0_50_3_100_4_0.1_c1.png SIRgeneral/plots/swgrid_2.0_3.5_50_4_19_13_0.05_c1.png SIRgeneral/plots/random_2.0_3.0_50_6_30_8_c1.png SIRgeneral/plots/rsf_2.0_4.0_5_7_200_10_6_3_c1.png ../../../publications/HITComp/pics
+
+
+**************
+#**Fig S10 "Outbreak size versus prior immunity in constant-susceptibility networks" 
+#constant susceptibility
+
+#complete
+./bin/SIRimmunity 5000 10 1000 2.0 2.5 50 1 30
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_complete_2.0_2.5_50_1_30
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_complete_2.0_2.5_50_1_30
+
+#gamma
+./bin/SIRimmunity -c3 5000 10 1000 2.0 2.5 50 2 30 0.1 0
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_2.5_50_2_30_0.1_0_c3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_2.5_50_2_30_0.1_0_c3
+
+#Ring small-world
+./bin/SIRimmunity -c3 5000 10 1000 2.0 4.0 50 3 100 4 0.1
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_4.0_50_3_100_4_0.1_c3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_4.0_50_3_100_4_0.1_c3
+
+#grid small-world
+./bin/SIRimmunity -c3 5000 10 1000 2.0 3.5 50 4 19 13 0.05
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.5_50_4_19_13_0.05_c3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.5_50_4_19_13_0.05_c3
+
+#random
+./bin/SIRimmunity -c3 5000 10 1000 2.0 3.0 50 6 30 8
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.0_50_6_30_8_c3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.0_50_6_30_8_c3
+
+#ring-preferential
+./bin/SIRimmunity -c3 5000 50 1000 2.0 4.0 5 7 200 10 6 3
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_3.0_5_7_200_10_6_3_c3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_3.0_5_7_200_10_6_3_c3
+
+#plots
+cd SIRgeneral && gnuplot immunity.gnu && cd ..
+cp SIRgeneral/plots/complete_2.0_2.5_50_1_30.png SIRgeneral/plots/gamma_2.0_2.5_50_2_30_0.1_0_c3.png SIRgeneral/plots/sw_2.0_4.0_50_3_100_4_0.1_c3.png SIRgeneral/plots/swgrid_2.0_3.5_50_4_19_13_0.05_c3.png SIRgeneral/plots/random_2.0_3.0_50_6_30_8_c3.png SIRgeneral/plots/rsf_2.0_3.0_5_7_200_10_6_3_c3.png ../../../publications/HITComp/pics
