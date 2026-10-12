@@ -23,7 +23,7 @@ AR      =       ar crs
 
 OBJECTS =	src/obj/common.o
 
-project: bin/SIRgeneral bin/SIRimmunity bin/SIRcomplete bin/SIRring bin/SIRsfring bin/SIRgrid bin/SIRrandom bin/SIRgamma bin/SIRtorus bin/SIRvax bin/resample bin/SIRoutsize bin/SIRleakeffect
+project: bin/SIRgeneral bin/SIRimmunity bin/SIRcomplete bin/SIRring bin/SIRsfring bin/SIRgrid bin/SIRrandom bin/SIRgamma bin/SIRtorus bin/SIRvax bin/resample bin/SIRoutsize bin/SIRleakeffect bin/SIRsecondary
 
 clean: 
 	rm bin/* src/lib/libepi.a src/obj/*.o
@@ -43,6 +43,10 @@ bin/SIRgeneral: src/SIRgeneral.c $(MAINLIB)
 
 bin/SIRimmunity: src/SIRimmunity.c $(MAINLIB)
 	$(CXX) -o bin/SIRimmunity src/SIRimmunity.c -lm -Lsrc/lib $(MAINLINK)
+
+bin/SIRsecondary: src/SIRsecondary.c $(MAINLIB)
+	$(CXX) -o bin/SIRsecondary src/SIRsecondary.c -lm -Lsrc/lib $(MAINLINK)
+
 
 bin/SIRcomplete: src/SIRcomplete.c $(MAINLIB)
 	$(CXX) -o bin/SIRcomplete src/SIRcomplete.c -lm -Lsrc/lib $(MAINLINK)

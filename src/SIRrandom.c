@@ -1,6 +1,6 @@
-/* Copyright (C) 2024-5, Murad Banaji
+/* Copyright (C) 2024-6, Murad Banaji
  *
- * This file is part of EPIcode, for compartmental models in epidemiology
+ * This file is part of EPIcode, for metapopulation models in epidemiology
  *
  * EPIcode is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
   //constout=3: variable total infectivity, constant in-infection and
   //constant susceptibility
   int constout=2;
-  double meandeg;//shape parameter for gamma distributed coupling strengths
+  double meandeg;//expected mean degree
 
   double **epsM; //The coupling matrix
   int **epsI; //The coupling matrix structure
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
 
   //varying the mean degree
   for(i=0;i<=10;i++){
-    meandeg=4+i;
+    meandeg=4+(double)i;
     //set the coupling matrix (gridtype=6)
     sz_natural_tot=0.0;
     for(j=0;j<grids_per_param;j++){

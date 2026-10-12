@@ -1,6 +1,6 @@
-/* Copyright (C) 2024-5, Murad Banaji
+/* Copyright (C) 2024-6, Murad Banaji
  *
- * This file is part of EPIcode, for compartmental models in epidemiology
+ * This file is part of EPIcode, for metapopulation models in epidemiology
  *
  * EPIcode is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 
@@ -33,6 +33,7 @@ int main(int argc, char *argv[]){
 
   int opt, mainargs=0;
   char *arg6, *arg7, *arg8, *arg9;
+  char *histoutfile;//for the histogram data
   
   double tmax=500.0;//cut off by time tmax if extinction isn't achieved
   
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]){
 
   int totpop;
   
-  int printfull=1;//full output: long file; safest set to 0
+  int printfull=0;//full output: long file; safest set to 0
   int printmean=0;//do we want the mean output?
 
   int i,i1,j,jrun,iter,totepis;
@@ -90,6 +91,7 @@ int main(int argc, char *argv[]){
   double *V;
 
   int S0tot=0,R0tot=0, Stot,Rtot;
+  double S0frac,scalefac;
   int *Episz;//number of comps. infected at the end of Epi.
   int *Episzhist;//histogram of outbreak sizes
   double *outfrac;//fraction infected during outbreak
@@ -102,9 +104,8 @@ int main(int argc, char *argv[]){
   FILE *fd2=fopen("SIRgeneral/outfiles/Epincompfinal", "w");
   FILE *fd3=fopen("SIRgeneral/outfiles/Epincompeps", "w");
   FILE *fd4=fopen("SIRgeneral/outfiles/Epincompduration.csv", "w");
-  FILE *fd6=fopen("SIRgeneral/outfiles/vax_protect", "w");//for plotting purposes
   FILE *fd7=fopen("SIRgeneral/outfiles/network_properties", "w");
-
+  FILE *fd5;
 
   //mean of the simulations
   int meantot=1000;//total time points to output
@@ -117,7 +118,7 @@ int main(int argc, char *argv[]){
   double meanfinalT=0.0;
   double det_sz;//deterministic expected epidemic size
 
-  double **alphap;
+  double **alphap=NULL;
   int **sparse=NULL;
   int brief=1;//avoid calculating Rt_nextgen and outbreak_P
   int Epihistnum=20;
@@ -144,34 +145,36 @@ int main(int argc, char *argv[]){
     }
   }
 
-  
   while(optind < argc){
     switch (mainargs) {
     case 0:
-      totruns=atoi(argv[optind]);
+      histoutfile=argv[optind];
       break;
     case 1:
-      RepNo=atof(argv[optind]);
+      totruns=atoi(argv[optind]);
       break;
     case 2:
-      leak=atof(argv[optind]);
+      RepNo=atof(argv[optind]);
       break;
     case 3:
-      Nc=atoi(argv[optind]);
+      leak=atof(argv[optind]);
       break;
     case 4:
-      gridtype=atoi(argv[optind]);
+      Nc=atoi(argv[optind]);
       break;
     case 5:
-      arg6=argv[optind];
+      gridtype=atoi(argv[optind]);
       break;
     case 6:
-      arg7=argv[optind];
+      arg6=argv[optind];
       break;
     case 7:
-      arg8=argv[optind];
+      arg7=argv[optind];
       break;
     case 8:
+      arg8=argv[optind];
+      break;
+    case 9:
       arg9=argv[optind];
       break;
     }
@@ -181,11 +184,11 @@ int main(int argc, char *argv[]){
 
 
 
-  if(mainargs<6){
-    fprintf(stderr, "ERROR: expecting at least the following arguments:\n\t\"totruns\" (number of base-runs)\n\t\"RepNo\" (basic reproduction number)\n\t\"leak\" (fraction of out-infections X compartment population)\n\t\"Nc\" (compartment population)\n\t\"gridtype\" (see source file for available types)\n\tnumber of compartments\"Nc\", or \"Nx\" and \"Ny\" for a 2D grid\n\nEXITING\n");exit(0);
+  if(mainargs<7){
+    fprintf(stderr, "ERROR: expecting at least the following arguments:\n\t\"histoutfile\" (output file for the histogram data)\n\t\"totruns\" (number of base-runs)\n\t\"RepNo\" (basic reproduction number)\n\t\"leak\" (fraction of out-infections X compartment population)\n\t\"Nc\" (compartment population)\n\t\"gridtype\" (see source file for available types)\n\tnumber of compartments \"Nc\", or \"Nx\" and \"Ny\" for a 2D grid\n\nEXITING\n");exit(0);
   }
   if(gridtype==4){//2d grid small world
-    if(mainargs<8){
+    if(mainargs<9){
       fprintf(stderr, "for a 2d grid you must specify the dimensions \"Nx\" and \"Ny\", and the rewiring probability \"rewiring_prob\". EXITING\n");exit(0);
     }
     Nx=atoi(arg6);Ny=atoi(arg7);ncomp=Nx*Ny;rewiring_prob=atof(arg8);
@@ -193,32 +196,32 @@ int main(int argc, char *argv[]){
   else{
     ncomp=atoi(arg6);//number of compartments
     if(gridtype==2){//gamma
-      if(mainargs<8){
+      if(mainargs<9){
 	fprintf(stderr, "for gamma distributed weights, you must specify the shape parameter, and whether coupling is symmetric (0=not/1=symmetric). EXITING\n");exit(0);
       }
       param1=atof(arg7);param2=atoi(arg8);
     }
     else if(gridtype==3){//ring small world
-      if(mainargs<8){
+      if(mainargs<9){
 	fprintf(stderr, "for a (ring) small-world network you must specify:\n\tthe initial clique size \"clq_sz\" (must be even), and\n\tthe rewiring probability \"rewiring_prob\".\n\nEXITING\n");exit(0);
       }
       clq_sz=atoi(arg7);rewiring_prob=atof(arg8);
 
     }
     else if(gridtype==5){//scale free
-      if(mainargs<7){
+      if(mainargs<8){
 	fprintf(stderr, "for a scale free network, you must specify the initial clique size (a positive integer)\n\nEXITING\n");exit(0);
       }
       scalefree_clq=atoi(arg7);
     }
     else if(gridtype==6){//random
-      if(mainargs<7){
+      if(mainargs<8){
 	fprintf(stderr, "for a random network, you must specify the mean degree.\nEXITING\n");exit(0);
       }
       param1=atof(arg7);
     }
     else if(gridtype==7){//ring scale-free
-      if(mainargs<9){
+      if(mainargs<10){
 	fprintf(stderr, "For a (ring) preferential attachment network you must specify:\n\tthe ring size \"init_ring\", \n\tthe initial clique size \"clq_sz\" (must be even), and\n\tnumber of new edges at each step.\n\nEXITING\n");exit(0);
       }
       param2=atoi(arg7);clq_sz=atoi(arg8);scalefree_clq=atoi(arg9);      
@@ -229,6 +232,7 @@ int main(int argc, char *argv[]){
 
   }
 
+  fd5=fopen(histoutfile, "w");
 
   compV=(double)Nc;//set population density to 1
   eps=leak/((double)Nc);
@@ -254,10 +258,13 @@ int main(int argc, char *argv[]){
   outfrac=(double*) malloc(sizeof(double) * (totruns+1));
   mean_outbreak_sz=(double*) malloc(sizeof(double) * (ncomp+1));
   mean_outbreak_sz_cond=(double*) malloc(sizeof(double) * (ncomp+1));
-  alphap=alphapoly(eps, RepNo, Nc, ncomp, 1);
-  
+  if(ncomp>1 && ncomp < 12)
+    alphap=alphapoly(eps, RepNo, Nc, ncomp, 1);
+
+
   inittozero(EpiHist, Epihistnum+1);
 
+  
   //random seeding
   timeint = time(&timepoint); /* set and convert time to an integer */
   srand(timeint);
@@ -347,9 +354,12 @@ int main(int argc, char *argv[]){
 	if(!brief)
 	  fprintf(fd2, ", %d, %.4f%%, %.4f%%, %.4f, %.4f\n", Episz[jrun], outfrac[jrun]*100.0, outbreak_P*100.0, Rt_classical[jrun], Rt_nextgen[jrun]);
 	else
-	  fprintf(fd2, ", %d, %.4f%%, %.4f\n", Episz[jrun], outfrac[jrun]*100.0, Rt_classical[jrun]);
+	  fprintf(fd2, ", %d, %.4f, %.4f\n", Episz[jrun], outfrac[jrun]*100.0, Rt_classical[jrun]);
       }
+      //Outbreak size histogram (unconditioned)
+      fprintf(fd5, "%.4f\n", outfrac[jrun]*100.0);
 
+      
       if(Episz[jrun]==ncomp)
 	fprintf(fd4, "%d, %.4f\n", Episz[jrun], t);
 
@@ -369,8 +379,11 @@ int main(int argc, char *argv[]){
 
     //The deterministic epidemic size in the one-compartment case
     //See https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology
-    det_sz=(1.0+boost::math::lambert_w0(-(double)S0tot/(double)totpop*RepNo*exp(-RepNo*(1.0-(double)R0tot/(double)totpop)))/RepNo);
-    fprintf(stderr, "Deterministic final outbreak size (%%) = %.4f\n", det_sz*100.0);
+    S0frac= (double)S0tot/(double)totpop;
+    scalefac=S0frac>0?max((1.0-1.0/(S0frac*RepNo)),0):0;//@@
+    //fprintf(stderr, "S0frac = %.4f\n", S0frac);
+    det_sz=(S0frac+boost::math::lambert_w0(-S0frac*RepNo*exp(-RepNo*S0frac))/RepNo);
+    fprintf(stderr, "Unconditional (deterministic) final outbreak size (%%) = %.4f\n", scalefac*det_sz*100.0);
     fprintf(stderr, "Stochastic mean final outbreak size (%%) = %.4f\n", mean_outbreak_sztot/(double)totruns/(double)totpop*100.0);
 
     if((gridtype==3 || gridtype==5 || gridtype==6) && (constout==0 || constout==2)){//variable out infection
@@ -403,7 +416,7 @@ int main(int argc, char *argv[]){
     }
     fprintf(fd3, ")\n");
 
-    if(gridtype==1){//theoretical results in the symmetric, complete, case
+    if(gridtype==1 && alphap){//theoretical results in the symmetric, complete, case
       fprintf(stderr, "Episz_expect: ");
       for(i=0;i<=ncomp;i++){
 	fprintf(stderr, "%d ", (int)(alphap[ncomp][i]*totepis));
@@ -423,7 +436,7 @@ int main(int argc, char *argv[]){
   fclose(fd2);
   fclose(fd3);
   fclose(fd4);
-  fclose(fd6);
+  fclose(fd5);
   free_dmatrix(NextGen,ncomp,ncomp);
   free_dmatrix(epsM,ncomp,ncomp);
   free_imatrix(epsI,ncomp,ncomp);
@@ -437,7 +450,8 @@ int main(int argc, char *argv[]){
   free((char*)outfrac);free((char*)mean_outbreak_sz);
   free((char*)mean_outbreak_sz_cond);
   
-  free_dmatrix(alphap,ncomp+1,ncomp+1);
+  if(alphap)
+    free_dmatrix(alphap,ncomp+1,ncomp+1);
   if(sparse)
     free_imat(sparse,ncomp);
 

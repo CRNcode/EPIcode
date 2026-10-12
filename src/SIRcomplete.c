@@ -1,6 +1,6 @@
-/* Copyright (C) 2024-5, Murad Banaji
+/* Copyright (C) 2024-6, Murad Banaji
  *
- * This file is part of EPIcode, for compartmental models in epidemiology
+ * This file is part of EPIcode, for metapopulation models in epidemiology
  *
  * EPIcode is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License 

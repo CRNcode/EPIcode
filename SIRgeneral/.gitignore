@@ -1,3 +1,5 @@
 # Ignore temporary files
 *~
 tmp.gnu
+dataI
+dataS

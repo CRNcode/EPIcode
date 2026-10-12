@@ -13,12 +13,13 @@ set xrange [-0.1:2.1]
 set ytics 5
 set lmargin 8
 set bmargin 4
-set xlabel "-log10(α)"
+set xlabel "-log_{10}(α)"
 set ylabel "mean outbreak size (%)"
 set style fill  transparent solid 0.2 noborder
 set style circle radius 0.02
 
 #Gamma (variable infectivity)
+set yrange [0:22]
 #./bin/SIRgamma -c2 100 1000 2.0 2.5 50 30 0
 set title "Gamma networks"
 set output 'plots/gamma_effect_2.0_2.5_50_30_0.png'
@@ -51,8 +52,8 @@ set key bottom right
 #./bin/SIRrandom -c1 100 1000 2.0 3.0 50 100
 set title "random networks (constant infectivity)"
 set xrange [3.6:14.4]
-set yrange [0:25]
-set xlabel "mean degree"
+#set yrange [0:25]
+set xlabel "expected mean degree"
 set output 'plots/random_meandeg_2.0_3.0_50_100_c1.png'
 plot 'outfiles/random_meandeg_2.0_3.0_50_100_c1' using ($1):($4) with circles lc rgb "blue" t "each grid", \
          'outfiles/random_meandeg_mean_2.0_3.0_50_100_c1' using ($1):($2) w circles lc rgb "red" fs solid 1.0 border lt -1 t "mean of all",
@@ -60,8 +61,8 @@ plot 'outfiles/random_meandeg_2.0_3.0_50_100_c1' using ($1):($4) with circles lc
 #./bin/SIRrandom -c3 100 1000 2.0 3.0 50 100
 set title "random networks (constant susceptibility)"
 set xrange [3.6:14.4]
-set yrange [0:25]
-set xlabel "mean degree"
+#set yrange [0:25]
+set xlabel "expected mean degree"
 set output 'plots/random_meandeg_2.0_3.0_50_100_c3.png'
 plot 'outfiles/random_meandeg_2.0_3.0_50_100_c3' using ($1):($4) with circles lc rgb "blue" t "each grid", \
          'outfiles/random_meandeg_mean_2.0_3.0_50_100_c3' using ($1):($2) w circles lc rgb "red" fs solid 1.0 border lt -1 t "mean of all",
@@ -72,15 +73,15 @@ set title "random networks"
 #unset title
 #unset ylabel
 set xrange [3.6:14.4]
-set yrange [0:20]
-set xlabel "mean degree"
+#set yrange [0:20]
+set xlabel "expected mean degree"
 set output 'plots/random_meandeg_2.0_2.5_50_100.png'
 plot 'outfiles/random_meandeg_2.0_2.5_50_100' using ($1):($4) with circles lc rgb "blue" t "each grid", \
          'outfiles/random_meandeg_mean_2.0_2.5_50_100' using ($1):($2) w circles lc rgb "red" fs solid 1.0 border lt -1 t "mean of all",
 
 
 
-set yrange [0:20]
+#set yrange [0:20]
 set style circle radius 0.2
 
 
@@ -98,7 +99,7 @@ set key top left
 #./bin/SIRring 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
 set title "small-world rings"
-set xlabel "rewiring probability"
+set xlabel "rewiring probability (%)"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4.png'
 plot 'outfiles/sw_rewire_2.0_4.0_50_100_4' using (100*($1)):($2) with circles lc rgb "blue" t "each grid", \
@@ -107,7 +108,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4' using (100*($1)):($2) with circles lc
 #./bin/SIRring -c1 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
 set title "small-world rings (constant infectivity)"
-set xlabel "rewiring probability"
+set xlabel "rewiring probability (%)"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4_c1.png'
 plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c1' using (100*($1)):($2) with circles lc rgb "blue" t "each grid", \
@@ -116,7 +117,7 @@ plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c1' using (100*($1)):($2) with circles
 #./bin/SIRring -c3 100 1000 2.0 4.0 50 100 4
 set xrange [-0.5:20.5]
 set title "small-world rings (constant susceptibility)"
-set xlabel "rewiring probability"
+set xlabel "rewiring probability (%)"
 #unset title
 set output 'plots/sw_rewire_2.0_4.0_50_100_4_c3.png'
 plot 'outfiles/sw_rewire_2.0_4.0_50_100_4_c3' using (100*($1)):($2) with circles lc rgb "blue" t "each grid", \

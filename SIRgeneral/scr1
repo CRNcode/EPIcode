@@ -1,0 +1,4 @@
+#ring-preferential, constant susceptibility
+./bin/SIRimmunity -c3 5000 50 1000 2.0 4.0 5 7 200 10 6 3
+cp SIRgeneral/outfiles/vax_protect SIRgeneral/outfiles/vax_protect_2.0_4.0_5_7_200_10_6_3_c3
+cp SIRgeneral/outfiles/network_properties SIRgeneral/outfiles/network_properties_2.0_4.0_5_7_200_10_6_3_c3
