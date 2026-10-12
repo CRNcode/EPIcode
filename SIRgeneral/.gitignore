@@ -1,5 +1,7 @@
 # Ignore temporary files
 *~
+*.png
+scr1
 tmp.gnu
 dataI
 dataS
