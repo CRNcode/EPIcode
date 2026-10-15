@@ -175,7 +175,7 @@ cd SIRgeneral && gnuplot immunity.gnu && cd ..
 
 
 *************
-#**Fig S1 "The response of normalised outbreak size to mean leak across architectures"
+#**Fig A (alternatively S1) "The response of normalised outbreak size to mean leak across architectures"
 
 #ring
 ./bin/SIRleakeffect SIRgeneral/outfiles/leak_2.0_0.0_8.0_10_3_100_4_0.0 10000 2.0 0.0 8.0 10 3 100 4 0.0
@@ -201,7 +201,7 @@ cd SIRgeneral && gnuplot leakeffect.gnu && cd ..
 #produces leak_2.0_0.0_X_X_3_100_4_0.0.png, leak_2.0_0.0_X_X_4_10_10_0.0.png, leak_2.0_0.0_X_X_6_100_4.png, leak_2.0_0.0_X_X_7_100_10_2_1.png
 
 **************
-#**Fig S2 "Outbreak size as we vary network architecture in constant-infectivity networks"
+#**Fig B (alternatively S2) "Outbreak size as we vary network architecture in constant-infectivity networks"
 
 #Gamma
 ./bin/SIRgamma -c1 100 1000 2.0 2.5 50 30 0
@@ -229,7 +229,7 @@ cd SIRgeneral && gnuplot architecture.gnu && cd ..
 
 
 *************
-#**Fig S3 "Outbreak size as we vary network architecture in constant-susceptibility networks"
+#**Fig C (alternatively S3) "Outbreak size as we vary network architecture in constant-susceptibility networks"
 
 #Gamma
 ./bin/SIRgamma -c3 100 1000 2.0 2.5 50 30 0
@@ -257,7 +257,7 @@ cd SIRgeneral && gnuplot architecture.gnu && cd ..
 
 ***************
 
-#**Fig S4 "Outbreak size distribution in small-world grids with increasing rewiring"
+#**Fig D (alternatively S4) "Outbreak size distribution in small-world grids with increasing rewiring"
 
 #no rewiring
 ./bin/SIRgeneral SIRgeneral/outfiles/OutbreakHist_2.0_3.5_30_4_19_13_0.00 50000 2.0 3.5 30 4 19 13 0.00
@@ -276,7 +276,7 @@ cd SIRgeneral && gnuplot EpiSizeHist.gnu && cd ..
 
 ***************
 
-#**Fig S5 "Outbreak sizes versus prior random immunity in random and ring-preferential networks"
+#**Fig E (alternatively S5) "Outbreak sizes versus prior random immunity in random and ring-preferential networks"
 
 # Edited SIRvax.c for speed: "for(i=100;i>=0;i--)" --> "for(i=100;i>=0;i-=5)"
 
@@ -293,7 +293,7 @@ cd SIRgeneral && gnuplot vax.gnu && cd ..
 ***************
 
 
-#**Fig S6 "Outbreak size versus prior immunity in random networks with varying subpopulation size"
+#**Fig F (alternatively S6) "Outbreak size versus prior immunity in random networks with varying subpopulation size"
 
 #random individual
 ./bin/SIRimmunity 5000 50 1000 2.0 1 1 6 500 5
@@ -322,7 +322,7 @@ cd SIRgeneral && gnuplot immunity.gnu && cd ..
 
 
 *****************
-#**Fig S7 "Outbreak size versus prior immunity in ring-preferential networks with varying subpopulation size"
+#**Fig G (alternatively S7) "Outbreak size versus prior immunity in ring-preferential networks with varying subpopulation size"
 
 #ring-preferential varying sizes
 ./bin/SIRimmunity -c2 5000 50 1000 2.0 2.0 5 7 200 20 4 1
@@ -346,7 +346,7 @@ cd SIRgeneral && gnuplot immunity.gnu && cd ..
 #produces rsf_2.0_2.0_5_7_200_20_4_1_c2.png, rsf_2.0_2.5_10_7_200_20_4_1_c2.png, rsf_2.0_3.0_20_7_200_20_4_1_c2.png, rsf_2.0_3.0_40_7_200_20_4_1_c2.png
 
 **************
-#**Fig S8 "Outbreak size versus prior immunity in individual-based small-world grids"
+#**Fig H (alternatively S8) "Outbreak size versus prior immunity in individual-based small-world grids"
 
 #individual grids with increasing rewiring
 ./bin/SIRimmunity -c2 5000 50 1000 3.0 1 1 4 15 15 0.0
@@ -371,7 +371,7 @@ cd SIRgeneral && gnuplot immunity.gnu && cd ..
 
 
 ***************
-#**Fig S9 "Outbreak size versus prior immunity in individual-based ring-preferential networks"
+#**Fig I (alternatively S9) "Outbreak size versus prior immunity in individual-based ring-preferential networks"
 
 #Ring preferential individual-based: default and constant infectivity/susceptibility
 ./bin/SIRimmunity -c2 5000 50 1000 2.0 1 1 7 200 10 2 2
@@ -396,7 +396,7 @@ cd SIRgeneral && gnuplot immunity.gnu && cd ..
 
 
 ***************
-#**Fig S10 "Outbreak size versus prior immunity in constant-infectivity networks" 
+#**Fig J (alternatively S10) "Outbreak size versus prior immunity in constant-infectivity networks" 
 #constant infectivity
 
 #complete
@@ -435,7 +435,7 @@ cd SIRgeneral && gnuplot immunity.gnu && cd ..
 
 
 **************
-#**Fig S11 "Outbreak size versus prior immunity in constant-susceptibility networks" 
+#**Fig K (alternatively S11) "Outbreak size versus prior immunity in constant-susceptibility networks" 
 #constant susceptibility
 
 #complete
